@@ -18,6 +18,14 @@ A command-line productivity system implementing David Allen's [Getting Things Do
 
 ## Installation
 
+### Homebrew (recommended)
+
+```bash
+brew install deenaik/tap/gtd-cli
+```
+
+### From source
+
 ```bash
 git clone https://github.com/deenaik/gtd-cli.git
 cd gtd-cli
@@ -29,6 +37,18 @@ The binary is built to `bin/gtd`. To install it to your PATH:
 ```bash
 make install
 ```
+
+## Releasing
+
+Releases are managed with [GoReleaser](https://goreleaser.com/). To publish a new version:
+
+```bash
+git tag vX.Y.Z
+git push origin vX.Y.Z
+GITHUB_TOKEN=$(gh auth token) goreleaser release --clean
+```
+
+This builds cross-platform binaries (macOS/Linux, amd64/arm64), creates a GitHub Release, and updates the [Homebrew tap](https://github.com/deenaik/homebrew-tap) formula automatically.
 
 ## Quick Start
 
