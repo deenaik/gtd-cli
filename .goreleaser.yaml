@@ -1,0 +1,45 @@
+version: 2
+
+project_name: gtd-cli
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./main.go
+    binary: gtd
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+
+archives:
+  - formats:
+      - tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+brews:
+  - repository:
+      owner: deenaik
+      name: homebrew-tap
+    homepage: "https://github.com/deenaik/gtd-cli"
+    description: "A CLI implementing the Getting Things Done (GTD) methodology"
+    license: "MIT"
+    install: |
+      bin.install "gtd"
+    test: |
+      system "#{bin}/gtd", "--help"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
